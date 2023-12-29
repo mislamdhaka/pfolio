@@ -4,7 +4,7 @@ import SigninForm from "@/app/(front)/auth/signup/signup-form";
 
 const Signin = async () => {
   return (
-    <div className="min-h-screen flex items-center flex-col">
+    <div className="flex items-center flex-col">
       <h2 className="font-bold text-2xl leading-9 tracking-tight mt-6 text-center">
         Create new account
       </h2>

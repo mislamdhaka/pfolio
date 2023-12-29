@@ -4,7 +4,7 @@ import ResetPasswordForm from "@/app/(front)/auth/reset-password/reset-pass-form
 
 const ResetPassword = async () => {
   return (
-    <div className="min-h-screen flex items-center flex-col">
+    <div className="flex items-center flex-col">
       <h2 className="font-bold text-2xl leading-9 tracking-tight mt-6 text-center">
         Reset password
       </h2>
