@@ -8,7 +8,7 @@ const UpdatePassword = async () => {
       <h2 className="font-bold text-2xl leading-9 tracking-tight mt-6 text-center">
         Update password
       </h2>
-      <div className="mt-10 sm:max-w-[480px] sm:mx-auto sm:w-full">
+      <div className="mt-10 w-full sm:max-w-[480px] mx-auto px-4">
         <UpdatePasswordForm />
         <p className="mt-10 text-center text-sm text-gray-500">
           Back to &nbsp;&nbsp;

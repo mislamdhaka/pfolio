@@ -14,7 +14,7 @@ export default function DialogCloseButton() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" className="w-full">
           <Icons.phone className="mr-2 h-4 w-4" />
           Phone
         </Button>

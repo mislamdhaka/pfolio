@@ -158,9 +158,9 @@ export const Icons = {
       <g
         id="Icons"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
         <g id="Rounded" transform="translate(-749.000000, -1263.000000)">
           <g id="Communication" transform="translate(100.000000, 1162.000000)">
