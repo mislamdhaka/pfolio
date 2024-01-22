@@ -1,5 +1,6 @@
 import { auth, githubProvider } from "@/lib/firebase/firebase";
 import { linkWithPopup } from "firebase/auth";
+import { User } from "firebase/auth";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export interface SignInCred {

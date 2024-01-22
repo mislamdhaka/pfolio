@@ -1,11 +1,17 @@
 import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
+import { Auth } from "firebase/auth";
 
-export function handleResetPassword(auth, actionCode, continueUrl, lang) {
+export function handleResetPassword(
+  auth: Auth,
+  actionCode: string | null,
+  continueUrl: string | null,
+  lang: string | null
+) {
   // Localize the UI to the selected language as determined by the lang
   // parameter.
 
   // Verify the password reset code is valid.
-  verifyPasswordResetCode(auth, actionCode)
+  verifyPasswordResetCode(auth, actionCode!)
     .then((email) => {
       const accountEmail = email;
 
@@ -14,7 +20,7 @@ export function handleResetPassword(auth, actionCode, continueUrl, lang) {
       const newPassword = "...";
 
       // Save the new password.
-      confirmPasswordReset(auth, actionCode, newPassword)
+      confirmPasswordReset(auth, actionCode!, newPassword)
         .then((resp) => {
           // Password reset has been confirmed and new password updated.
           // TODO: Display a link back to the app, or sign-in the user directly

@@ -4,15 +4,16 @@ import { cookies } from "next/headers";
 
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { SessionCookieOptions, UserRecord, getAuth } from "firebase-admin/auth";
-import { User } from "firebase/auth";
 
 export const firebaseApp =
   getApps().find((it) => it.name === "firebase-admin-app") ||
   initializeApp(
     {
-      credential: cert(
-        "lib/my-projects-a1aa5-firebase-adminsdk-mjxsj-b7a30e6ae0.json"
-      ),
+      credential: cert({
+        projectId: process.env.PROJECT_ID,
+        privateKey: process.env.PRIVATE_KEY?.replace(/\\n/g, "\n"),
+        clientEmail: process.env.CLIENT_EMAIL,
+      }),
     },
     "firebase-admin-app"
   );
