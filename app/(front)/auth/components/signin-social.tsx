@@ -1,18 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { Icons } from "@/components/ui/icons";
-import DialogCloseButton from "@/app/(front)/auth/components/phone-dialog";
+import DialogCloseButton from "./phone-dialog";
+import SigninGoogle from "./signin-google";
+import SigninGithub from "./signin-github";
 
 const SigninSocial = () => {
   return (
     <div className="grid sm:grid-cols-3 gap-4">
-      <Button variant="outline" className="w-full">
-        <Icons.gitHub className="mr-2 h-4 w-4" />
-        Github
-      </Button>
-      <Button variant="outline" className="w-full">
-        <Icons.google className="mr-2 h-4 w-4" />
-        Google
-      </Button>
+      <SigninGithub />
+      <SigninGoogle />
       <DialogCloseButton />
     </div>
   );

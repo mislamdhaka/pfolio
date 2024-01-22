@@ -1,9 +1,11 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import * as z from "zod";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,8 +24,11 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
 import SigninSocial from "../components/signin-social";
+import { useSignin } from "./useSignin";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { auth } from "@/lib/firebase/firebase";
+import { useToast } from "@/components/ui/use-toast";
 
 const FormSchema = z.object({
   email: z
@@ -36,23 +41,31 @@ const FormSchema = z.object({
 });
 
 export default function SigninForm() {
+  const { mutation } = useSignin();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "sendmailtomislam@gmail.com",
+      password: "Pushpita@2008",
     },
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    mutation.mutate(data);
+    form.reset();
+  }
+
+  function sendVerificationEmail() {
+    if (auth.currentUser) {
+      sendEmailVerification(auth.currentUser).then(() => {
+        toast({
+          title: "Success",
+          description:
+            "A verification email sent to your email account. Please click on the link to verify your account.",
+        });
+      });
+    }
   }
 
   return (
@@ -71,6 +84,24 @@ export default function SigninForm() {
             </span>
           </div>
         </div>
+
+        {mutation.error?.message === "Email verification failed" && (
+          <Alert variant="destructive" className="my-6">
+            <AlertTitle>Email verification failed!</AlertTitle>
+            <AlertDescription>
+              Email is not verified. Please verify your email first to sigin in
+              to your account.
+              <Button
+                variant="link"
+                className="block p-0"
+                onClick={sendVerificationEmail}
+              >
+                Send verification email again
+              </Button>
+            </AlertDescription>
+          </Alert>
+        )}
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-6">
             <FormField
@@ -80,11 +111,7 @@ export default function SigninForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Enter email"
-                      {...field}
-                      className="w-full"
-                    />
+                    <Input {...field} className="w-full" type="email" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -97,17 +124,20 @@ export default function SigninForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Enter password"
-                      {...field}
-                      className="w-full"
-                    />
+                    <Input {...field} className="w-full" type="password" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={mutation.isPending}
+            >
+              {mutation.isPending && (
+                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              )}
               Sign in
             </Button>
           </form>

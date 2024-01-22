@@ -22,7 +22,9 @@ export default function DialogCloseButton() {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Phone signin</DialogTitle>
-          <DialogDescription>Enter phone number to sign in</DialogDescription>
+          <DialogDescription>
+            Authentication with your cell phone
+          </DialogDescription>
         </DialogHeader>
         <div className="flex items-center space-x-2">
           <div className="grid flex-1 gap-2">

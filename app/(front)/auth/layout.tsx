@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="bg-gray-50 flex min-h-[900px] flex-col">
+    <div className="bg-gray-50 flex min-h-screen flex-col">
       <div className="sm:px-6 ddh min-h-full py-12 justify-center flex-col flex-1 flex">
         <Link href="/">
           <Image
