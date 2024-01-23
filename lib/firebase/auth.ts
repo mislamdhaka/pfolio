@@ -38,14 +38,11 @@ export async function mergeAccount(
     "Firebase: Error (auth/account-exists-with-different-credential)."
   ) {
     if (auth.currentUser) {
-      console.log(auth.currentUser);
       linkWithPopup(auth.currentUser, githubProvider)
         .then((result) => {
           authCallback(result.user, router);
         })
         .catch((error) => {
-          console.log(error);
-          console.log("bottom");
           toast({
             title: "Error",
             description: "Failed to merge account.",

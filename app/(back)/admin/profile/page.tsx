@@ -6,7 +6,7 @@ import { auth, githubProvider, googleProvider } from "@/lib/firebase/firebase";
 import { unlink } from "firebase/auth";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext } from "react";
 import { GlobalContext } from "@/contexts/GlobalContext";
 
 import { useMerge } from "./useMerge";
@@ -15,7 +15,7 @@ const Profile = () => {
   const { toast } = useToast();
   const router = useRouter();
   const { mutation } = useMerge();
-  const { user, setMsg } = useContext(GlobalContext);
+  const { setMsg } = useContext(GlobalContext);
   const providers: string[] = [];
 
   if (!auth.currentUser)
@@ -27,7 +27,6 @@ const Profile = () => {
   for (const element of auth.currentUser.providerData) {
     providers.push(element.providerId);
   }
-  console.log(user);
 
   const handleUnlink = (provider: string) => {
     unlink(auth.currentUser!, provider)
@@ -38,7 +37,6 @@ const Profile = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
         toast({
           title: "Account unlink failed",
           description: `${provider} unlink failed.`,
@@ -46,9 +44,13 @@ const Profile = () => {
       });
   };
 
+  if (providers.includes("phone")) return;
+
   return (
     <div className="flex flex-col items-start space-y-2">
-      {providers.includes("google.com") ? (
+      {providers.includes("phone") ? (
+        ""
+      ) : providers.includes("google.com") ? (
         <Button onClick={() => handleUnlink("google.com")} className=" w-64">
           <Icons.google className="mr-2 h-4 w-4" />
           Unlink Google

@@ -10,7 +10,6 @@ import {
 import { GlobalContext } from "@/contexts/GlobalContext";
 import { auth } from "@/lib/firebase/firebase";
 import { authCallback } from "@/lib/firebase/auth";
-import { Provider } from "@radix-ui/react-toast";
 
 export function useProvider() {
   const router = useRouter();

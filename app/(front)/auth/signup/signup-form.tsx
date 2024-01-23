@@ -18,9 +18,6 @@ import {
   linkWithPopup,
   EmailAuthProvider,
   signInWithCredential,
-  signInWithPopup,
-  GithubAuthProvider,
-  GoogleAuthProvider,
 } from "firebase/auth";
 
 import { Button } from "@/components/ui/button";
@@ -139,7 +136,6 @@ export default function SignupForm() {
                   setLoading(false);
                 })
                 .catch((error) => {
-                  console.log(error);
                   setMsg({
                     status: "error",
                     title: "Account merging failed!",
@@ -150,7 +146,6 @@ export default function SignupForm() {
                 });
             })
             .catch((error) => {
-              console.log(error);
               setMsg({
                 status: "error",
                 title: "Account merging failed!",
@@ -161,7 +156,6 @@ export default function SignupForm() {
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
           setMsg({
             status: "error",
             title: "Account merging failed!",
