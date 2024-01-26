@@ -1,6 +1,7 @@
 "use server";
 import nodeMailer from "nodemailer";
 import { FormSchema } from "@/app/(pages)/contact/contact-form";
+import * as z from "zod";
 
 export default async function sendMail(data: z.infer<typeof FormSchema>) {
   const transporter = nodeMailer.createTransport({
