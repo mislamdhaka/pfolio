@@ -1,7 +1,7 @@
 import PageBanner from "@/components/page-banner";
 import ContactForm from "./contact-form";
 import ContactDetails from "./contact-details";
-import GMap from "@/components/GMap";
+import GMap from "@/app/(pages)/contact/gmap";
 
 const Contact = () => {
   return (

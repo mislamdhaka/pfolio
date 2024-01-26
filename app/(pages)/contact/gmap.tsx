@@ -1,15 +1,16 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const GMap = () => {
+  const mapRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     let map;
 
     async function initMap(): Promise<void> {
       const loader = new Loader({
-        apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY!,
+        apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY as string,
         version: "weekly",
         libraries: ["places"],
       });
@@ -24,10 +25,10 @@ const GMap = () => {
         "marker"
       )) as google.maps.MarkerLibrary;
 
-      map = new Map(document.getElementById("map") as HTMLElement, {
+      map = new Map(mapRef.current as HTMLDivElement, {
         zoom: 14,
         center: position,
-        mapId: "DEMO_MAP_ID",
+        mapId: "MY_NEXTJS_MAP",
       });
 
       const marker = new AdvancedMarkerElement({
@@ -44,7 +45,7 @@ const GMap = () => {
       <CardHeader>
         <CardTitle className="text-left">Locate me on map</CardTitle>
       </CardHeader>
-      <CardContent id="map" className="h-[350px]"></CardContent>
+      <CardContent ref={mapRef} className="h-[350px]"></CardContent>
     </Card>
   );
 };
