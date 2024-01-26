@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ReCaptchaProvider } from "next-recaptcha-v3";
 import { Toaster } from "@/components/ui/toaster";
 import Providers from "./providers";
 import GlobalContextProvider from "@/contexts/GlobalContext";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 import "./globals.css";
-
-// import {
-//   dehydrate,
-//   HydrationBoundary,
-//   QueryClient,
-// } from "@tanstack/react-query";
-
-// import { getCurrentUser } from "@/lib/firebase/firebase-admin";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,22 +19,24 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const queryClient = new QueryClient();
-
-  // await queryClient.prefetchQuery({
-  //   queryKey: ["user"],
-  //   queryFn: getCurrentUser,
-  // });
-
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
-          <GlobalContextProvider>{children}</GlobalContextProvider>
-          {/* </HydrationBoundary> */}
-          <Toaster />
-        </Providers>
+        <ReCaptchaProvider
+          reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+        >
+          <Providers>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <GlobalContextProvider>{children}</GlobalContextProvider>
+            </ThemeProvider>
+            <Toaster />
+          </Providers>
+        </ReCaptchaProvider>
       </body>
     </html>
   );
